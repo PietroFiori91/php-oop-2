@@ -1,19 +1,29 @@
 <?php
 require_once(__DIR__ . './classes/Categoria.php');
 require_once(__DIR__ . './classes/Prodotti.php');
+require_once(__DIR__ . './customException.php');
 
-// Funzione per stampare una card di prodotto
-function stampaCardProdotto($prodotto)
-{
-    echo '<div class="card">';
-    echo '<img src="' . $prodotto->immagine . '" alt="' . $prodotto->nome . '">';
-    echo '<h3>' . $prodotto->nome . '</h3>';
-    echo '<p>Prezzo: $' . $prodotto->prezzo . '</p>';
-    echo '<p>Categoria: ' . $prodotto->categoria->nome . '</p>';
-    echo '<p>Tipo: ' . $prodotto->tipoArticolo . '</p>';
-    echo '</div>';
+
+// CREO PRODOTTO
+$prodottoCiboCani = new Prodotto(1, "Cibo per Cani", 20, "https://picsum.photos/200/200", $categoriaCani, "Cibo");
+
+// RECENSIONE
+$prodottoCiboCani->aggiungiRecensione("Ottimo cibo per cani!");
+
+// VISUAL RECENSIONE
+$recensioni = $prodottoCiboCani->visualizzaRecensioni();
+foreach ($recensioni as $recensione) {
+    echo "Recensione: $recensione<br>";
+}
+
+try {
+    // ECCEZIONE
+    throw new CustomException("ERRORE");
+} catch (CustomException $e) {
+    echo $e->errorMessage();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
